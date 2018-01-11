@@ -23,5 +23,5 @@ public class SimpleStringTest {
 		assertEquals("\\D{3}\\d{3}\\D{6}.{1}\\d{3}", SimpleString.analyse(sample1));
 		assertEquals("\\D{3}\\d{3}", SimpleString.analyse(sample2));
 	}
-
+	
 }
