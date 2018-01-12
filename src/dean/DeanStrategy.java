@@ -59,13 +59,19 @@ public class DeanStrategy {
 
 			Pattern pattern = Pattern.compile(key);
 			Matcher matcher = pattern.matcher(str);
-			String replacementPattern = this.regexMap.get(key);
+			String replacementPattern = getReplacementPattern(this.regexMap.get(key));
 			if(matcher.matches()) {
-				String patternWithCount = replacementPattern.replaceAll("[\\^\\+]+", "") + "{" + matcher.group(1).length() + "}";
-				return analyse(str.replaceFirst(replacementPattern, ""), regex += patternWithCount);
+				String patternWithCount = replacementPattern + "{" + matcher.group(1).length() + "}";
+				return analyse(str.replaceFirst(this.regexMap.get(key), ""), regex += patternWithCount);
 			}
 		}
 		return regex;
+	}
+	
+	private String getReplacementPattern(String pattern) {
+		int start = pattern.indexOf("[");
+		int end = pattern.indexOf("]");
+		return pattern.substring(start, end + 1);
 	}
 
 	public int getMatchedCount(String str) {
