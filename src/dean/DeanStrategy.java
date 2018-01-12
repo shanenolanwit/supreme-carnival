@@ -1,43 +1,75 @@
 package dean;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DeanStrategy {
-	
-	private static String REGEX_ALPHA = "[a-z]+";
-	private static String REGEX_NUMERIC = "[0-9]+";
 
-	private static Pattern PATTERN_ALPHA = Pattern.compile(REGEX_ALPHA);
-	private static Pattern PATTERN_NUMERIC = Pattern.compile(REGEX_NUMERIC);
-	
-	public static String analyse(String str) {
+	private final static String A2ZLOWER = "^([a-z]{2,})(.*)$";
+	private final static String A2ZUPPER = "^([A-Z]{2,})(.*)$";
+	private final static String A2ZALL = "^([a-zA-Z]+)(.*)$";
+	private final static String ZERO2NINE = "^([0-9]+)(.*)$";
+	private final static String NONALPHANUMERIC = "^([^a-zA-Z0-9]+)(.*)$";
+
+	private Map<String, String> regexMap;
+	private List<String> regexList;
+
+	public DeanStrategy() {
+		init();
+	}
+
+	public void init() {
+		populateRegexList();
+		populateRegexMap();
+	}
+
+	private void populateRegexMap() {
+		this.regexMap = new HashMap<String, String>();
+		this.regexMap.put(A2ZLOWER, "^[a-z]+");
+		this.regexMap.put(A2ZUPPER, "^[A-Z]+");
+		this.regexMap.put(A2ZALL, "^[a-zA-Z]+");
+		this.regexMap.put(ZERO2NINE, "^[0-9]+");
+		this.regexMap.put(NONALPHANUMERIC, "^[^a-zA-Z0-9]+");
+	}
+
+	private void populateRegexList() {
+		this.regexList = new ArrayList<String>(Arrays.asList(A2ZLOWER,
+				A2ZUPPER,
+				A2ZALL,
+				ZERO2NINE,
+				NONALPHANUMERIC));
+	}
+
+	public String analyse(String str) {
 		return analyse(str, "");
 	}
-	
-	private static String analyse(String str, String regex) {
-		Matcher alphaMatcher = PATTERN_ALPHA.matcher(str);
-		Matcher numericMatcher = PATTERN_NUMERIC.matcher(str);
-		String temp = "";
-		do {
-			if(alphaMatcher.find()) {
-				temp = str.substring(alphaMatcher.end(), str.length());
-				regex += REGEX_ALPHA;
-			}else if(numericMatcher.find()) {
-				temp = str.substring(numericMatcher.end(), str.length());
-				regex += REGEX_NUMERIC;
+
+	private String analyse(String str, String regex) {
+
+		if(!str.isEmpty()) {
+			String key = this.regexList.stream()
+					.filter(p -> Pattern.compile(p).matcher(str).matches())
+					.findFirst()
+					.get();
+
+			Pattern pattern = Pattern.compile(key);
+			Matcher matcher = pattern.matcher(str);
+			String replacementPattern = this.regexMap.get(key);
+			if(matcher.matches()) {
+				String patternWithCount = replacementPattern.replaceAll("[\\^\\+]+", "") + "{" + matcher.group(1).length() + "}";
+				return analyse(str.replaceFirst(replacementPattern, ""), regex += patternWithCount);
 			}
-		}while(!temp.isEmpty());
-		
+		}
 		return regex;
 	}
-	
-	public static int getMatchedCount(String str) {
-		int count = 0;
-//		Matcher alphaMatcher = REGEX_ALPHA.matcher(str);
-//		alphaMatcher.find();
-//		int matchSize = str.substring(alphaMatcher.start(), alphaMatcher.end()).length();
-		return count;
+
+	public int getMatchedCount(String str) {
+		return 0;
 	}
-	
+
 }
