@@ -19,4 +19,14 @@ public class DeanBranch {
 	public int getIndex() {
 		return this.index;
 	}
+	
+	public String getStringSet() {
+		return this.stringSet;
+	}
+	
+	public boolean isBranchEqual(DeanBranch otherBranch) {
+		return this.stringSet.equals(otherBranch.getStringSet()) &&
+			   this.regex.equals(otherBranch.getRegex())		 &&
+			   this.index == otherBranch.getIndex();
+	}
 }
