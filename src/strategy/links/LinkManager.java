@@ -13,28 +13,25 @@ public class LinkManager {
 		boolean found = false;
 		int count = str.length();
 		String regex = "";
-		do{
-			if(str.length() > 0 && atozLowerMatch(str, count)){
+		while(!found && count > 0){
+			if(!found && atozLowerMatch(str, count)){
 				regex += atozLowerReplace(str, count);
 				found = true;
-			} else {
-				if(str.length() > 0 &&  atozUpperMatch(str, count)){
-					regex += atozUpperReplace(str, count);
-					found = true;					
-				} else {
-					if(str.length() > 0 &&  zeroToNineAnyMatch(str, count)){
-						regex += zeroToNineAnyReplace(str, count);						
-						found = true;						
-					} else {
-						if(str.length() > 0 &&  specialAnyMatch(str, count)){
-							regex += specialAnyReplace(str, count);
-							found = true;							
-						}
-					}
-				}				
 			}
+			if(!found && atozUpperMatch(str, count)){
+				regex += atozUpperReplace(str, count);
+				found = true;
+			}
+			if(!found && zeroToNineAnyMatch(str, count)){
+				regex += zeroToNineAnyReplace(str, count);						
+				found = true;						
+			} 
+			if(!found && specialAnyMatch(str, count)){
+				regex += specialAnyReplace(str, count);
+				found = true;							
+			}			
 			count--;
-		}while(!found && count > 1);	
+		}			
 		return regex;
 	}
 	
@@ -72,7 +69,7 @@ public class LinkManager {
 	
 	public String splitByPattern(String str, String stringPattern, String replacement){
 		Matcher m = Pattern.compile(stringPattern).matcher(str);
-		m.matches();
+		m.matches();		
 		String regex = "";
 		regex += getRegex(m.group(1));
 		regex += replacement;
