@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 public class DeanTree {
 
+	private static final String LOOKAROUND_REPLACEMENT = "(\\)?\\(\\?<?!\\[.{3,10}\\]\\)\\(?)";
 	private static final String A_Z_LOWER = "[a-z]";
 	private static final String A_Z_UPPER = "[A-Z]";
 	private static final String ZERO_TO_NINE = "[0-9]";
@@ -76,7 +77,7 @@ public class DeanTree {
 	 */
 	private void createBranches(Pattern pattern) {
 		Matcher matcher = pattern.matcher(this.sample);
-		String replacementPattern = pattern.pattern().replaceAll("(\\)?\\(\\?<?!\\[.{3,10}\\]\\)\\(?)","");
+		String replacementPattern = pattern.pattern().replaceAll(LOOKAROUND_REPLACEMENT,"");
 		while(matcher.find()) {
 			for(int i = 1; i <= matcher.groupCount(); i++) {
 				String group = matcher.group(i);	//loop over all capture groups that were matched and insert them as a branch if they are not already a branch
