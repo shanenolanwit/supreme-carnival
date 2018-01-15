@@ -69,14 +69,13 @@ public class LinkManager {
 	
 	public String splitByPattern(String str, String stringPattern, String replacement){
 		Matcher m = Pattern.compile(stringPattern).matcher(str);
-		m.matches();		
-		String regex = "";
-		regex += getRegex(m.group(1));
-		regex += replacement;
-		regex += getRegex(m.group(3));
-		return regex;		
+		m.matches();
+		return new StringBuilder(getRegex(m.group(1)))
+					.append(replacement)
+					.append(getRegex(m.group(3)))
+					.toString();
+			
 	}
-
 	
 
 }
