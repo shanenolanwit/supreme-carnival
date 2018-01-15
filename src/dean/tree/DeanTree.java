@@ -17,7 +17,6 @@ public class DeanTree {
 
 
 	private List<String> regexList;
-
 	private List<DeanBranch> branches;
 
 	private String sample;
@@ -36,8 +35,7 @@ public class DeanTree {
 	public String getRegex() {
 		return this.branches.stream().sorted(Comparator.comparing(DeanBranch::getIndex))		//when all branches are created, we should be able to sort them by their index and join their regex to construct the full regex
 									 .map(branch -> branch.getRegex())
-									 .collect(Collectors.joining())
-									 .replaceAll("(\\(\\?<?!\\[.{3,10}\\]\\))", "");		//replace the negative lookbehind and positive negative lookaheads from the regex to make more compact
+									 .collect(Collectors.joining());		
 	}
 
 	/**
@@ -51,9 +49,8 @@ public class DeanTree {
 		String regexToTry = this.regexList.get(index);
 		Pattern pattern = Pattern.compile("(?<!" + regexToTry + ")(" + regexToTry + "{" + (sampleSize) + "})(?!" + regexToTry + ")");		//create the pattern using the sampleSize
 		Matcher matcher = pattern.matcher(str);
-		Matcher sampleMatcher = pattern.matcher(this.sample);
 		if(matcher.find()) {
-			createBranches(sampleMatcher, pattern);		//create branches from the match
+			createBranches(pattern);		//create branches from the match
 			generateRegex(Arrays.asList(str.split(pattern.pattern())));	//split the word on the first match to create word sets that need to be worked on
 		}else {
 			sampleSize = ((index + 1) % regexList.size() == 0) ? sampleSize - 1 : sampleSize;	//only reduce the sampleSize if we tried all of the regex in the regex list
@@ -77,12 +74,14 @@ public class DeanTree {
 	 * @param matcher - matcher object used to test the string
 	 * @param pattern - pattern used to create the matcher
 	 */
-	private void createBranches(Matcher matcher, Pattern pattern) {
+	private void createBranches(Pattern pattern) {
+		Matcher matcher = pattern.matcher(this.sample);
+		String replacementPattern = pattern.pattern().replaceAll("(\\)?\\(\\?<?!\\[.{3,10}\\]\\)\\(?)","");
 		while(matcher.find()) {
 			for(int i = 1; i <= matcher.groupCount(); i++) {
 				String group = matcher.group(i);	//loop over all capture groups that were matched and insert them as a branch if they are not already a branch
-				if(!branchExists(group, pattern.pattern(), matcher.start())) {
-					this.branches.add(new DeanBranch(group, pattern.pattern(), matcher.start()));
+				if(!branchExists(group, replacementPattern, matcher.start())) {
+					this.branches.add(new DeanBranch(group, replacementPattern, matcher.start()));
 				}
 			}
 		}
