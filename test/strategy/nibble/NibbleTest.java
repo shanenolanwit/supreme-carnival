@@ -22,7 +22,7 @@ public class NibbleTest {
 	public void test() {
 		
 		for(RegexSample sample : RegexSample.values()){
-			assertEquals(sample.getOutput(),new Nibbler(sample.getInput()).getRegex());
+			assertEquals(sample.getOutput(),Nibbler.nibble(sample.getInput()));
 		}	
 
 	}
