@@ -3,7 +3,11 @@ package poc;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import strategy.links.LinkManager;
 
 public class StringSims {
 	
@@ -25,14 +29,29 @@ public class StringSims {
 						}).collect(Collectors.toList());
 	}
 	
-	/**
-	 * This is a work in progress - might not make sense as we need to be able to detect multiple duplicate sequences
-	 * @param input
-	 * @return
-	 */
-	public static Map<String,Integer> getSubsetIndexes(String input){
-		return getSubsets(input).stream().collect(Collectors.toMap(k -> k, k -> input.indexOf(k)));
+	public static String lazyMatch(List<String> candidates){
+		
+		String candidate = candidates.get(0);
+		List<String> others = candidates.subList(1, candidates.size());
+		List<String> substrings = getSubsets(candidate)
+									.stream().filter(s -> s.length() > 2)
+									.collect(Collectors.toList());
+		
+		boolean hasMatches;
+		String matchingSubstring = "";
+		for(String substring : substrings){
+			String regex = "^(.*?)(" + substring + ")(.*?)$";
+			hasMatches = others.stream().allMatch(s -> s.matches(regex));
+			if(hasMatches){
+				System.out.println("FOUND A MATCH " + substring);
+				matchingSubstring = substring;
+				break;
+			}
+		}
+		
+		return matchingSubstring;
 	}
+	
 	
 
 
