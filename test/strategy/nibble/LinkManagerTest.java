@@ -2,12 +2,14 @@ package strategy.nibble;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import data.RegexSample;
 import strategy.links.LinkManager;
+import strategy.links.SubstringLinkManager;
 import strategy.stacks.StackManager;
 
 public class LinkManagerTest {
@@ -42,6 +44,25 @@ public class LinkManagerTest {
 		String normSectionB = m.normaliseSection("[a-z]{8}", "[0-9]{7}");
 		assertEquals("([a-z]{8}|[0-9]{7})", normSectionB);
 		//assertEquals("[a-z]{6,8}[0-9]{3}[A-Z]{3}[0-9]{3,4}",m.normaliseSections(regexA,regexB));
+	}
+	
+	@Test
+	public void testSubstringsAndRegexes(){
+		
+		assertEquals("[a-z]{3,4}BATMAN[0-9]{2,3}", 
+				SubstringLinkManager.getRegex(Arrays.asList("abcdBATMAN123","xyzBATMAN456","defBATMAN45")));
+		assertEquals("(.*?)BATMAN[0-9]{2,3}", 
+				SubstringLinkManager.getRegex(Arrays.asList("BATMAN123","xyzBATMAN456","defBATMAN45")));
+		assertEquals("[a-z]{3,4}BATMAN(.*?)", 
+				SubstringLinkManager.getRegex(Arrays.asList("abcdBATMAN","xyzBATMAN456","defBATMAN45")));
+		assertEquals("[a-z]{3,4}BATMAN[^a-zA-Z0-9]{2,3}", 
+				SubstringLinkManager.getRegex(Arrays.asList("abcdBATMAN@#","xyzBATMAN#=!","defBATMAN##")));
+		
+		assertEquals("[a-z]{3,4}(.*?)BATMAN[0-9]{2,3}", 
+				SubstringLinkManager.getRegex(Arrays.asList("abcd88BATMAN123","xyzBATMAN456","defBATMAN45")));
+		assertEquals("[a-z]{3,4}BATMAN[0-9]{2,3}XXX[0-9]{1,1}", 
+				SubstringLinkManager.getRegex(Arrays.asList("abcdBATMAN123XXX1","xyzBATMAN45XXX7","defBATMAN451XXX0")));
+
 	}
 	
 }

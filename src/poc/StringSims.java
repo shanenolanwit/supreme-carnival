@@ -38,7 +38,6 @@ public class StringSims {
 			String regex = "^(.*?)(" + substring + ")(.*?)$";
 			hasMatches = others.stream().allMatch(s -> s.matches(regex));
 			if(hasMatches){
-				System.out.println("FOUND A MATCH " + substring);
 				matchingSubstring = substring;
 				break;
 			}
