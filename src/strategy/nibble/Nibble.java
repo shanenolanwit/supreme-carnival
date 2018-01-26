@@ -8,21 +8,17 @@ public class Nibble {
 	private final boolean matches;
 	private final String bite;
 	private final String leftovers;
-	private final NibbleExpression nibbleExpression;
+	private final PatternDefiniton patternDefinition;	
 	
-	
-	public Nibble(String str, NibbleExpression nibbleExpression){	
-		this.nibbleExpression = nibbleExpression;
-		String expr = nibbleExpression.getCaptureString();
-		Pattern pattern = Pattern.compile(expr);
-		Matcher matcher = pattern.matcher(str);
+	public Nibble(String str, PatternDefiniton patternDefinition){	
+		this.patternDefinition = patternDefinition;
+		String expr = patternDefinition.getCaptureString();
+		Matcher matcher = Pattern.compile(expr).matcher(str);
 		if(matcher.matches()){
-//			System.out.println("[String:" + str + ",Expr:" + expr + ",Match:true]");
 			this.matches = true;
 			this.bite = matcher.group(1);
 			this.leftovers = matcher.groupCount() > 1 ? matcher.group(2) : "";
 		}else {
-//			System.out.println("[String:" + str + ",Expr:" + expr + ",Match:false]");
 			this.matches = false;
 			this.bite = "";
 			this.leftovers = "";
@@ -41,18 +37,8 @@ public class Nibble {
 		return leftovers;
 	}
 
-	public NibbleExpression getNibbleExpression() {
-		return nibbleExpression;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public PatternDefiniton getPatternDefinition() {
+		return patternDefinition;
+	}	
 
 }

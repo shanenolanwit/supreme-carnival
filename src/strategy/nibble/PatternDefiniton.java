@@ -1,13 +1,13 @@
 package strategy.nibble;
 
-public enum NibbleExpression {
+public enum PatternDefiniton {
 	
 	A2ZLOWER("^([a-z]+)(.*)$","[a-z]","^[a-z]+"),
 	A2ZUPPER("^([A-Z]+)(.*)$","[A-Z]","^[A-Z]+"),
 	ZERO2NINE("^([0-9]+)(.*)$","[0-9]","^[0-9]+"),
 	NONALPHANUMERIC("^([^a-zA-Z0-9]+)(.*)$","[^a-zA-Z0-9]","^[^a-zA-Z0-9]+");
 	
-	private NibbleExpression(String captureString, String baseString, String replaceString) {
+	private PatternDefiniton(String captureString, String baseString, String replaceString) {
 		this.captureString = captureString;
 		this.baseString = baseString;
 		this.replaceString = replaceString;
