@@ -2,9 +2,8 @@ package strategy.nibble;
 
 public enum NibbleExpression {
 	
-	A2ZLOWER("^([a-z]{2,})(.*)$","[a-z]","^[a-z]+"),
-	A2ZUPPER("^([A-Z]{2,})(.*)$","[A-Z]","^[A-Z]+"),
-	A2ZALL("^([a-zA-Z]+)(.*)$","[a-zA-Z]","^[a-zA-Z]+"),
+	A2ZLOWER("^([a-z]+)(.*)$","[a-z]","^[a-z]+"),
+	A2ZUPPER("^([A-Z]+)(.*)$","[A-Z]","^[A-Z]+"),
 	ZERO2NINE("^([0-9]+)(.*)$","[0-9]","^[0-9]+"),
 	NONALPHANUMERIC("^([^a-zA-Z0-9]+)(.*)$","[^a-zA-Z0-9]","^[^a-zA-Z0-9]+");
 	

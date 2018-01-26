@@ -2,6 +2,7 @@ package poc;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
@@ -31,6 +32,12 @@ public class SimpleStringTest {
 		List<String> subsets = StringSims.getSubsets("abcd");
 		assertEquals(10, subsets.size());
 		assertEquals("abcd", subsets.get(0));
+	}
+	
+	@Test
+	public void testThree(){
+		List<String> candidates = Arrays.asList("abcdBATMAN12w","BATMANxyz","911BATMAN","e1eBATMANyui","0BATMAN0");
+		assertEquals("BATMAN", StringSims.lazyMatch(candidates));
 	}
 	
 }
