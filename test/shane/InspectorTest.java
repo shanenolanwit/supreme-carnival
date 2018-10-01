@@ -1,4 +1,4 @@
-package strategy.nibble;
+package shane;
 
 import static org.junit.Assert.*;
 
@@ -6,9 +6,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import data.RegexSample;
+import poc.Inspector;
 
-public class NibbleTest {
+public class InspectorTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -20,11 +20,8 @@ public class NibbleTest {
 
 	@Test
 	public void test() {
-		
-		for(RegexSample sample : RegexSample.values()){
-			assertEquals(sample.getOutput(),Nibbler.nibble(sample.getInput()));
-		}	
-
+		Inspector i = new Inspector();
+		assertEquals("[a-z]+[0-9]+[a-zA-Z]+[^a-zA-Z0-9]+[A-Z]+", i.simplify("aaa09AbcDe-AZ"));
 	}
 	
 }
