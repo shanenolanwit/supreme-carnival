@@ -1,4 +1,4 @@
-package strategy.nibble;
+package shane;
 
 import static org.junit.Assert.*;
 
@@ -10,7 +10,7 @@ import data.RegexSample;
 import strategy.links.LinkManager;
 import strategy.stacks.StackManager;
 
-public class LinkManagerTest {
+public class ManagerTests {
 
 	@Before
 	public void setUp() throws Exception {
@@ -21,7 +21,7 @@ public class LinkManagerTest {
 	}
 
 	@Test
-	public void test() {
+	public void testLinkManager() {
 		LinkManager m = new LinkManager();
 
 		
@@ -31,7 +31,7 @@ public class LinkManagerTest {
 	}
 	
 	@Test
-	public void testTwo() {
+	public void testStackManager() {
 		StackManager m = new StackManager();
 		String regexA = "[a-z]{6}[0-9]{3}[A-Z]{3}[0-9]{3}";
 		String regexB = "[a-z]{8}[0-9]{3}[A-Z]{3}[0-9]{4}";
