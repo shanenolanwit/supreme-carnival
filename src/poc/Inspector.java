@@ -1,4 +1,4 @@
-package strategy.nibble;
+package poc;
 
 public class Inspector {
 	

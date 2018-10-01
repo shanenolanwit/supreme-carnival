@@ -1,10 +1,12 @@
-package strategy.nibble;
+package shane;
 
 import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import poc.Inspector;
 
 public class InspectorTest {
 
