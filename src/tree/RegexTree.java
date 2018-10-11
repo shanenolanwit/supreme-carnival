@@ -1,14 +1,16 @@
-package dean.tree;
+package tree;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class DeanTree {
+public class RegexTree {
 
 	private static final String LOOKAROUND_REPLACEMENT = "(\\)?\\(\\?<?!\\[.{3,10}\\]\\)\\(?)";
 	private static final String A_Z_LOWER = "[a-z]";
@@ -18,13 +20,13 @@ public class DeanTree {
 
 
 	private List<String> regexList;
-	private List<DeanBranch> branches;
+	private List<RegexBranch> branches;
 
 	private String sample;
 
-	public DeanTree(String sample) {
+	public RegexTree(String sample) {
 		this.sample = sample;
-		this.branches = new ArrayList<DeanBranch>();
+		this.branches = new ArrayList<RegexBranch>();
 		this.regexList = new ArrayList<String>(Arrays.asList(A_Z_LOWER, A_Z_UPPER, ZERO_TO_NINE, NON_ALPHA));
 		generateRegex(this.sample, 0, this.sample.length());
 	}
@@ -34,7 +36,7 @@ public class DeanTree {
 	 * @return regex that matches the sample member of theobject
 	 */
 	public String getRegex() {
-		return this.branches.stream().sorted(Comparator.comparing(DeanBranch::getIndex))		//when all branches are created, we should be able to sort them by their index and join their regex to construct the full regex
+		return this.branches.stream().sorted(Comparator.comparing(RegexBranch::getIndex))		//when all branches are created, we should be able to sort them by their index and join their regex to construct the full regex
 									 .map(branch -> branch.getRegex())
 									 .collect(Collectors.joining());		
 	}
@@ -82,7 +84,7 @@ public class DeanTree {
 			for(int i = 1; i <= matcher.groupCount(); i++) {
 				String group = matcher.group(i);	//loop over all capture groups that were matched and insert them as a branch if they are not already a branch
 				if(!branchExists(group, replacementPattern, matcher.start())) {
-					this.branches.add(new DeanBranch(group, replacementPattern, matcher.start()));
+					this.branches.add(new RegexBranch(group, replacementPattern, matcher.start()));
 				}
 			}
 		}
@@ -93,11 +95,18 @@ public class DeanTree {
 	 * @param str - the string to see if a branch already contains it in the tree
 	 * @param regex - regex to see if branch already contains it in the tree
 	 * @param index - index to see if there is a branch that already contains it in the tree
-	 * @return
+	 * @return true if a branch already exists in the tree with the same attributes
 	 */
 	private boolean branchExists(String str, String regex, int index) {
 		return this.branches.stream()
-							.anyMatch(branch -> branch.isBranchEqual(new DeanBranch(str, regex, index)));
+							.anyMatch(branch -> branch.isBranchEqual(new RegexBranch(str, regex, index)));
+	}
+
+	/**
+	 * @return the regexList
+	 */
+	public List<String> getRegexList() {
+		return regexList;
 	}
 	
 }
