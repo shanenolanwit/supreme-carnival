@@ -37,7 +37,22 @@ public class SimpleStringTest {
 	@Test
 	public void testThree(){
 		List<String> candidates = Arrays.asList("abcdBATMAN12w","BATMANxyz","911BATMAN","e1eBATMANyui","0BATMAN0");
-		assertEquals("BATMAN", StringSims.lazyMatch(candidates));
+		assertEquals(Arrays.asList("BATMAN","BATMAN","BATMAN","BATMAN","BATMAN"), StringSims.extractMatches(candidates, StringSims.lazyMatchRegex(candidates)));
+		
+		
+		candidates = Arrays.asList("1234asdASD1","23redTT","oiugsoiugs898abcYO5"); 
+		assertEquals("^(.*?)([0-9]{2}[a-z]{3}[A-Z]{2})(.*?)$", StringSims.lazyMatchRegex(candidates));
+		assertEquals(Arrays.asList("34asdAS","23redTT","98abcYO"), StringSims.extractMatches(candidates, StringSims.lazyMatchRegex(candidates)));
+		
+		candidates = Arrays.asList("shanen@gmail.com","deanGaffney@yahoo.com","conor@junior.net","jimmy@wit.ie"); 
+		System.out.println(StringSims.lazyMatchRegex(candidates));
+//		assertEquals("^(.*?)([a-zA-Z]{5,11})(.*?)$", StringSims.lazyMatchRegex(candidates));
+//		assertEquals(Arrays.asList("34asdAS","23redTT","98abcYO"), StringSims.extractMatches(candidates, StringSims.lazyMatchRegex(candidates)));
+		
+//		candidates = Arrays.asList("<iugiulg>EN104,jhndoe<xml>","<sometag>IE4548<gsp>","<blah>UK333<x<M>");
+//		assertEquals(Arrays.asList("EN104","IE454","UK333"), StringSims.extractMatches(candidates, StringSims.lazyMatchRegex(candidates)));
+		
+		
 	}
 	
 }

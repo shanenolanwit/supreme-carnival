@@ -11,7 +11,7 @@ public enum RegexSample {
 	SAMPLE_7("31/12/1999","[0-9]{2}[^a-zA-Z0-9]{1}[0-9]{2}[^a-zA-Z0-9]{1}[0-9]{4}"),
 	SAMPLE_8("1-8-08 [13:55]","[0-9]{1}[^a-zA-Z0-9]{1}[0-9]{1}[^a-zA-Z0-9]{1}[0-9]{2}[^a-zA-Z0-9]{2}[0-9]{2}[^a-zA-Z0-9]{1}[0-9]{2}[^a-zA-Z0-9]{1}"),
 	SAMPLE_9("0","[0-9]{1}"),
-	SAMPLE_10("---------P","[^a-zA-Z0-9]{9}[A-Z]{1}");
+	SAMPLE_10("---------P","[^a-zA-Z0-9]{9}[A-Z]{1}");	
 	
 	private final String input;
 	private final String output;	
