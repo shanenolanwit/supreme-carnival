@@ -59,6 +59,33 @@ public class SimpleStringTest {
 		assertTrue(StringSims.optimiseRegex("[A-Z]{3}[a-z]{2}[A-Z]{3}[a-z]{2}").contains("[A-Z]{3}[a-zA-Z]{5}[a-z]{2}"));
 		assertTrue(StringSims.optimiseRegex("[A-Z]{3}[a-z]{2}[A-Z]{3}[a-z]{2}").contains("[a-zA-Z]{8}[a-z]{2}"));
 		assertTrue(StringSims.optimiseRegex("[A-Z]{3}[a-z]{2}[A-Z]{3}[a-z]{2}").contains("[a-zA-Z]{10}"));
+		
+		
+		
+		assertTrue(StringSims.optimiseRegex("[a-z]{1}[A-Z]{3}").contains("[a-zA-Z]{4}"));
+		assertTrue(StringSims.optimiseRegex("[A-Z]{1}[a-z]{3}").contains("[a-zA-Z]{4}"));
+		assertTrue(StringSims.optimiseRegex("[a-z]{1}[a-zA-Z]{4}").contains("[a-zA-Z]{5}"));
+		assertTrue(StringSims.optimiseRegex("[A-Z]{1}[a-zA-Z]{4}").contains("[a-zA-Z]{5}"));
+		assertTrue(StringSims.optimiseRegex("[a-zA-Z]{3}[A-Z]{4}").contains("[a-zA-Z]{7}"));
+		assertTrue(StringSims.optimiseRegex("[a-zA-Z]{3}[a-z]{4}").contains("[a-zA-Z]{7}"));
+		
+		assertTrue(StringSims.optimiseRegex("[a-z]{4}[0-9]{4}").contains("[a-z0-9]{8}"));
+		assertTrue(StringSims.optimiseRegex("[A-Z]{4}[0-9]{4}").contains("[A-Z0-9]{8}"));
+		assertTrue(StringSims.optimiseRegex("[0-9]{4}[A-Z]{4}").contains("[A-Z0-9]{8}"));
+		assertTrue(StringSims.optimiseRegex("[0-9]{5}[a-z]{4}").contains("[a-z0-9]{9}"));
+		
+		assertTrue(StringSims.optimiseRegex("[a-zA-Z]{11}[0-9]{1}").contains("[a-zA-Z0-9]{12}"));
+		assertTrue(StringSims.optimiseRegex("[0-9]{11}[a-zA-Z]{21}").contains("[a-zA-Z0-9]{32}"));
+		
+		assertTrue(StringSims.optimiseRegex("[a-zA-Z0-9]{8}[a-z]{1}").contains("[a-zA-Z0-9]{9}"));
+		assertTrue(StringSims.optimiseRegex("[a-zA-Z0-9]{8}[A-Z]{2}").contains("[a-zA-Z0-9]{10}"));
+		assertTrue(StringSims.optimiseRegex("[a-zA-Z0-9]{5}[0-9]{2}").contains("[a-zA-Z0-9]{7}"));
+		assertTrue(StringSims.optimiseRegex("[0-9]{2}[a-zA-Z0-9]{5}").contains("[a-zA-Z0-9]{7}"));
+		assertTrue(StringSims.optimiseRegex("[a-z]{3}[a-zA-Z0-9]{5}").contains("[a-zA-Z0-9]{8}"));
+		assertTrue(StringSims.optimiseRegex("[A-Z]{4}[a-zA-Z0-9]{5}").contains("[a-zA-Z0-9]{9}"));
+		
+		
+		
 	}
 	
 }
