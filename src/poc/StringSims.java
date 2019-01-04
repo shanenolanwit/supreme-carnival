@@ -1,7 +1,10 @@
 package poc;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -61,6 +64,23 @@ public class StringSims {
 			Matcher m = Pattern.compile(regex).matcher(cand);
 			return m.find() ? m.group(2) : null; 
 		}).collect(Collectors.toList());
+	}
+	
+	
+	public static List<String> optimiseRegex(String unoptRegex){
+		String optRegex = unoptRegex;
+		List<Function<String, String>> catalog = new RegexOptimiser().getCatalog();
+		Set<String> optimisations = new HashSet<String>();
+		for(Function<String,String> f : catalog){						
+			optRegex = f.apply(optRegex);
+			optimisations.add(optRegex);
+		}
+		return new ArrayList<String>(optimisations);
+	}
+	
+	
+	public static String matchAll(List<String> candidates){
+		return "";
 	}
 	
 	

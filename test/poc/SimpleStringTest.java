@@ -49,10 +49,16 @@ public class SimpleStringTest {
 //		assertEquals("^(.*?)([a-zA-Z]{5,11})(.*?)$", StringSims.lazyMatchRegex(candidates));
 //		assertEquals(Arrays.asList("34asdAS","23redTT","98abcYO"), StringSims.extractMatches(candidates, StringSims.lazyMatchRegex(candidates)));
 		
-//		candidates = Arrays.asList("<iugiulg>EN104,jhndoe<xml>","<sometag>IE4548<gsp>","<blah>UK333<x<M>");
-//		assertEquals(Arrays.asList("EN104","IE454","UK333"), StringSims.extractMatches(candidates, StringSims.lazyMatchRegex(candidates)));
 		
-		
+	}
+	
+	@Test
+	public void testOptimisation(){
+//		assertEquals("[a-zA-Z]{5}", StringSims.optimiseRegex("[a-z]{3}[A-Z]{2}"));		
+//		assertEquals("[a-zA-Z]{5}", StringSims.optimiseRegex("[A-Z]{3}[a-z]{2}"));
+		assertTrue(StringSims.optimiseRegex("[A-Z]{3}[a-z]{2}[A-Z]{3}[a-z]{2}").contains("[A-Z]{3}[a-zA-Z]{5}[a-z]{2}"));
+		assertTrue(StringSims.optimiseRegex("[A-Z]{3}[a-z]{2}[A-Z]{3}[a-z]{2}").contains("[a-zA-Z]{8}[a-z]{2}"));
+		assertTrue(StringSims.optimiseRegex("[A-Z]{3}[a-z]{2}[A-Z]{3}[a-z]{2}").contains("[a-zA-Z]{10}"));
 	}
 	
 }
