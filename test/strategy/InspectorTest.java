@@ -1,4 +1,4 @@
-package shane;
+package strategy;
 
 import static org.junit.Assert.*;
 

@@ -9,6 +9,10 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Used to normalise regex pairs
+ * [a-z]{2} used to match String1 and [a-z]{7} used to match String2 becomes [a-z]{2,7} to match both String1 and String2
+ */
 public class StackManager {
 	
 	public String normalise(String a, String b){

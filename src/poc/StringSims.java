@@ -73,7 +73,6 @@ public class StringSims {
 		Set<String> optimisations = new HashSet<String>();
 		for(Function<String,String> f : catalog){						
 			optRegex = f.apply(optRegex);
-			System.out.println(optRegex);
 			optimisations.add(optRegex);
 		}
 		return new ArrayList<String>(optimisations);
